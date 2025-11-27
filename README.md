@@ -5,7 +5,7 @@
 **GitHub User Finder** — поиск пользователя GitHub по логину с отображением профиля и списка репозиториев.
 
 **Пример использованного API-запроса**  
-```js
+
 ** Профиль пользователя **
 await fetch(`https://api.github.com/users/${username}`)
 
@@ -30,3 +30,4 @@ await fetch(`https://api.github.com/users/${username}/repos?sort=stars&per_page=
 
 
 Работает на 100%, все требования выполнены!
+

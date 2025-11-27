@@ -13,7 +13,18 @@ await fetch(`https://api.github.com/users/${username}`)
 await fetch(`https://api.github.com/users/${username}/repos?sort=stars&per_page=12`)
 
 ### Скриншоты:
-(прикрепи 2-3 скриншота: главное окно, найденный пользователь, репозитории)
+
+<img width="938" height="462" alt="image" src="https://github.com/user-attachments/assets/4b9a3794-8ddd-4363-8dfe-1cf2a917c2e3" />
+
+<img width="900" height="844" alt="image" src="https://github.com/user-attachments/assets/2e7c78f6-bb0b-48b0-ae3d-abd8637249c7" />
+
+<img width="1800" height="875" alt="image" src="https://github.com/user-attachments/assets/62416fd7-63f7-4f2d-8fce-283381f1eac2" />
+
+<img width="1508" height="778" alt="image" src="https://github.com/user-attachments/assets/8481d1a8-32f3-4584-993e-2b810d3762ef" />
+
+<img width="1631" height="742" alt="image" src="https://github.com/user-attachments/assets/06c3ff37-1af0-4eea-b4a3-2ca239ff13fa" />
+
+
 
 ### Ответы на вопросы:
 1. Что делает useEffect в вашем приложении?  
@@ -30,5 +41,6 @@ await fetch(`https://api.github.com/users/${username}/repos?sort=stars&per_page=
 
 
 Работает на 100%, все требования выполнены!
+
 
 

@@ -6,10 +6,10 @@
 
 **Пример использованного API-запроса**  
 ```js
-// Профиль пользователя
+** Профиль пользователя **
 await fetch(`https://api.github.com/users/${username}`)
 
-// Репозитории (по популярности)
+** Репозитории (по популярности) **
 await fetch(`https://api.github.com/users/${username}/repos?sort=stars&per_page=12`)
 
 ### Скриншоты:
@@ -27,5 +27,6 @@ await fetch(`https://api.github.com/users/${username}/repos?sort=stars&per_page=
 
 4. Что из документации API было важнее всего?  
    → Что при слишком частых запросах GitHub возвращает 403, и нужно подождать.
+
 
 Работает на 100%, все требования выполнены!

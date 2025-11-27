@@ -40,7 +40,8 @@ await fetch(`https://api.github.com/users/${username}/repos?sort=stars&per_page=
    → Что при слишком частых запросах GitHub возвращает 403, и нужно подождать.
 
 
-Работает на 100%, все требования выполнены!
+
+
 
 
 

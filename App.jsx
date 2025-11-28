@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './App.css';
 
 function App() {
@@ -8,45 +8,45 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
+  
   useEffect(() => {
     if (!username.trim()) return;
-    
-  const fetchUser = async () => {
-    if (!username.trim()) {
-      setError('Введите логин GitHub');
-      return;
-    }
-    setLoading(true);
-    setError('');
-    setUser(null);
-    setRepos([]);
 
-    try {
-      const res = await fetch(`https://api.github.com/users/${username}`);
-      if (!res.ok) {
-        if (res.status === 404) throw new Error('Пользователь не найден');
-        if (res.status === 403) throw new Error('Слишком много запросов, подождите');
-        throw new Error('Ошибка сервера');
+    const fetchUserData = async () => {
+      setLoading(true);
+      setError('');
+      setUser(null);
+      setRepos([]);
+
+      try {
+       
+        const userRes = await fetch(`https://api.github.com/users/${username}`);
+        if (!userRes.ok) {
+          if (userRes.status === 404) throw new Error('Пользователь не найден');
+          if (userRes.status === 403) throw new Error('Слишком много запросов, подождите минуту');
+          throw new Error('Ошибка сервера');
+        }
+        const userData = await userRes.json();
+        setUser(userData);
+
+      
+        const reposRes = await fetch(`https://api.github.com/users/${username}/repos?sort=stars&per_page=12`);
+        const reposData = await reposRes.json();
+        setRepos(reposData);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
       }
-      const data = await res.json();
-      setUser(data);
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
+    };
 
-  const fetchRepos = async () => {
-    setLoading(true);
-    try {
-      const res = await fetch(`https://api.github.com/users/${username}/repos?sort=stars&per_page=12`);
-      const data = await res.json();
-      setRepos(data);
-    } catch (err) {
-      setError('Не удалось загрузить репозитории');
-    } finally {
-      setLoading(false);
+    fetchUserData();
+  }, [username]); 
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (username.trim()) {
+      setUsername(username.trim()); 
     }
   };
 
@@ -58,18 +58,17 @@ function App() {
       </header>
 
       <main className="main">
-        <div className="search-container">
+        <form onSubmit={handleSearch} className="search-container">
           <input
             type="text"
             placeholder="Введите логин GitHub (например: octocat)"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-            onKeyDown={(e) => e.key === 'Enter' && fetchUser()}
           />
-          <button onClick={fetchUser} className="search-btn">
+          <button type="submit" className="search-btn">
             Найти
           </button>
-        </div>
+        </form>
 
         {loading && <div className="loader">Загрузка...</div>}
         {error && <div className="error-box">{error}</div>}
@@ -97,21 +96,16 @@ function App() {
                 </div>
               </div>
 
-              <div className="actions">
-                <a href={user.html_url} target="_blank" rel="noreferrer" className="btn-primary">
-                  Открыть на GitHub
-                </a>
-                <button onClick={fetchRepos} className="btn-secondary" disabled={loading}>
-                  {loading ? 'Загрузка...' : 'Репозитории'}
-                </button>
-              </div>
+              <a href={user.html_url} target="_blank" rel="noreferrer" className="btn-primary">
+                Открыть на GitHub
+              </a>
             </div>
           </div>
         )}
 
         {repos.length > 0 && (
           <div className="repos-section">
-            <h3>Лучшие репозитории</h3>
+            <h3>Лучшие репозитории ({repos.length})</h3>
             <div className="repos-grid">
               {repos.map(repo => (
                 <div key={repo.id} className="repo-card">

@@ -8,6 +8,9 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
+  useEffect(() => {
+    if (!username.trim()) return;
+    
   const fetchUser = async () => {
     if (!username.trim()) {
       setError('Введите логин GitHub');
